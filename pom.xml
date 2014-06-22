@@ -146,20 +146,7 @@
                     <source>1.7</source>
                     <target>1.7</target>
                 </configuration>
-            </plugin>
-            <plugin>
-		      <groupId>com.atlassian.maven.plugins</groupId>
-		      <artifactId>maven-upload-plugin</artifactId>
-		      <version>1.1</version>
-		    <configuration>
-		        <resourceSrc>
-		            ${project.build.directory}/${project.build.finalName}.${project.packaging}
-		        </resourceSrc>
-		        <resourceDest>${jboss.deployDir}</resourceDest>
-		        <serverId>${jboss.host}</serverId>
-		        <url>${jboss.deployUrl}</url>
-		    </configuration>
-		</plugin>            
+            </plugin>            
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-dependency-plugin</artifactId>
