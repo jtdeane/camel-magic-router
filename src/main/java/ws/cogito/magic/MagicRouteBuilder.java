@@ -30,14 +30,13 @@ public class MagicRouteBuilder extends RouteBuilder {
 
     	/**
     	 * Content Based Routing - simple expression - V1
-    	 */
+    	 
     	from("activemq:emagic.order").
     	choice().
     		when().simple("${in.body} contains 'Houdini'").
     			to("activemq:priority.order").
     		otherwise().
-    			to("activemq:magic.order");
-
+    			to("activemq:magic.order");*/
     	/**
     	 * Content Based Routing - Mediation, simple expression
     	 
@@ -55,9 +54,10 @@ public class MagicRouteBuilder extends RouteBuilder {
     			transform(body().regexReplaceAll("@", "")).
     			to("activemq:magic.order");*/
     	
+    	
     	/**
     	 * Content Based Routing - Wire-Tap to ActiveMQ Topic 
-    	 	 
+    	  	
     	from("activemq:emagic.order").
     		wireTap("direct:ministry").
     	to("activemq:magic.order");
