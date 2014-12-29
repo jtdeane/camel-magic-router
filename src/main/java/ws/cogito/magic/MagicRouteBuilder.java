@@ -15,10 +15,13 @@ public class MagicRouteBuilder extends RouteBuilder {
 
     public void configure() {
     	
+    	/**
+    	 * Route errors to DLQ after one retry and one second delay
+    	 */
+    	errorHandler(deadLetterChannel("activemq:emagic.dead").
+    			maximumRedeliveries(1).redeliveryDelay(1000));
+    	
 		XPathBuilder splitXPath = new XPathBuilder (splitXpath);
-		
-		XmlJsonDataFormat xmlJsonFormat = new XmlJsonDataFormat();
-		xmlJsonFormat.setForceTopLevelObject(true);
 		
     	/**
     	 * Splitter - xpath expression
@@ -39,7 +42,10 @@ public class MagicRouteBuilder extends RouteBuilder {
     			to("activemq:magic.order");*/
     	/**
     	 * Content Based Routing - Mediation, simple expression
-    	 
+		
+		XmlJsonDataFormat xmlJsonFormat = new XmlJsonDataFormat();
+		xmlJsonFormat.setForceTopLevelObject(true);
+
     	from("activemq:emagic.order").
     	choice().
     		when().simple("${in.body} contains 'Houdini'").
