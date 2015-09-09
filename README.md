@@ -18,3 +18,5 @@ Runs within ActiveMQ (5.12.0)
 
 
 4) Executes with JMeter (2.13); requires activemq-all-5.12.0.jar in lib directory
+
+>Note that viewing message content in ActiveMQ Web Console is incompatible with Java 8 but will be fixed in ActiveMQ 5.13 (upgrading Jetty to 9+). Until then use the hawtio (http://hawt.io) to view message content.  
