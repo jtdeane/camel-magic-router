@@ -31,11 +31,7 @@ public class MagicRouteBuilderTest extends CamelTestSupport  {
 		    			when().simple("${in.body} contains 'Houdini'").
 		    				to("mock:normal").
 	    				otherwise().
-	    					to("mock:priority");
-		    	
-		    	from("direct:mediation").
-		    		marshal().xmljson().
-		    	to("mock:transformed");		    	
+	    					to("mock:priority");		    	
 			}
 		});		
 
@@ -87,25 +83,4 @@ public class MagicRouteBuilderTest extends CamelTestSupport  {
 		normal.assertIsSatisfied();
 		priority.assertIsSatisfied();
 	}
-	
-	@Test
-	public void testMediationLogic() throws Exception {
-		
-		//Set expectations
-		MockEndpoint transformed = getMockEndpoint("mock:transformed");
-		transformed.expectedMessageCount(1);
-		
-		String expectedJSON = IOUtils.toString(this.getClass().
-				getResourceAsStream("order1.json"), "UTF-8");
-		
-		transformed.expectedBodiesReceived(expectedJSON);		
-		
-		String xml1 = IOUtils.toString(this.getClass().
-				getResourceAsStream("order1.xml"), "UTF-8");
-		
-		template.sendBody("direct:mediation", xml1);
-		
-		transformed.assertIsSatisfied();
-
-	}	
 }
