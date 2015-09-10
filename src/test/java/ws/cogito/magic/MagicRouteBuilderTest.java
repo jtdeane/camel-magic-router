@@ -1,6 +1,7 @@
 package ws.cogito.magic;
 
 import org.apache.camel.CamelContext;
+import org.apache.camel.LoggingLevel;
 import org.apache.camel.builder.RouteBuilder;
 import org.apache.camel.builder.xml.XPathBuilder;
 import org.apache.camel.component.mock.MockEndpoint;
@@ -24,11 +25,13 @@ public class MagicRouteBuilderTest extends CamelTestSupport  {
 				//test xpath split
 		    	from ("direct:split").
 		    		split(new XPathBuilder (MagicRouteBuilder.splitXpath)).
+		    		log(LoggingLevel.DEBUG, "Order ${body}").
 		    	to("mock:order");
 		    	
 		    	from("direct:cbr").
 		    		choice().
 		    			when().simple("${in.body} contains 'Houdini'").
+		    				log(LoggingLevel.DEBUG, "Priority Order ${body}").
 		    				to("mock:normal").
 	    				otherwise().
 	    					to("mock:priority");		    	
