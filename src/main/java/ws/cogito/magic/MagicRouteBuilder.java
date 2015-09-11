@@ -12,7 +12,7 @@ public class MagicRouteBuilder extends RouteBuilder {
 
     public void configure() {
     	
-    	/**
+    	/*
     	 * Route errors to DLQ after one retry and one second delay
     	 */
     	errorHandler(deadLetterChannel("activemq:emagic.dead").
@@ -20,7 +20,7 @@ public class MagicRouteBuilder extends RouteBuilder {
     	
 		XPathBuilder splitXPath = new XPathBuilder (splitXpath);
 		
-    	/**
+    	/*
     	 * Splitter - xpath expression
     	 */
     	from("activemq:emagic.orders").
@@ -28,8 +28,8 @@ public class MagicRouteBuilder extends RouteBuilder {
     		parallelProcessing().
     	to("activemq:emagic.order");
 
-    	/**
-    	 * Content Based Routing - simple expression - V1
+    	/*
+    	 * Content Based Routing - simple expression
     	 */
     	from("activemq:emagic.order").
     	choice().
